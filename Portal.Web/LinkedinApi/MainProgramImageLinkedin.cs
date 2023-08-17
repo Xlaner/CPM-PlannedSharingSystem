@@ -23,7 +23,7 @@ namespace LinkedinImageProje
         {
             LinkedinURL URLS = new LinkedinURL 
             { 
-                accessToken = "AQVv49FZM8OnqYOntvm9vivXq7glQUmOOvMcyB54O-AdYFDF0BW5P7SayNq4cTEG8tw-5xWegM8wUbsZpEw73_AnL80c_ILeiOTnhWf9nDEp0tZLLhIflEpT32galD0Gh_0K3_bqmlWffrCyKzkl0uUJAWmFj-mGhxeyYyJuXUyR5vhxbCdjpgBaRYu8MgWwPyzEu4gu5-Q9tPpSEGRgOnbpcSj6PFm-QiYOAIv15kxgwGdZhCx60nDoFAuJQHm52pEj3-j-EGMPcokx2ZkoRGAm81-N8huuWeM_cza4iEyqdfvW8e9atHXdQEshidFXw-tPpiuIqCxKSVuyY13E_zzx_Or4Yw",
+                accessToken = "AQVv49FZM8OnqYOntvm9vivXq7glQUmOOvMcyB54O-AdYFDF0BW5P7SayNq4cTEG8tw-5xWegM8wUbsZpEw73_AnL80c_ILeiOTnhWf9nDEp0tZLLhIflEpT32galD0Gh_0K3_bqmlWffrCyKzkl0uUJAWmFj-mGhxeyYyJuXUyR5vhxbCdjpgBaRYu8MgWzEuasdrfgsdfhy4gu5-Q9tPpSEGRgOnbpcSj6PFm-fgjfulouıQiYOAIv15kxgwGdZhCx60nDoFAuJQHm52pEj3-j-EGMPcokx2ZkoRGAm81-N8huuWeM_cza4iEyqdfvW8e9atHXdQEshidFXw-tPpiuIqCxKSVuyY13E_zzx_Or4Yw",
                 
                 fileUploadPath = @"C:\Users\berke\Desktop\APIProje\Linkedin_proje\LinkedinProje\LinkedinImageProje\Photos\indir.png",
                 imageText = "bu bir deneme metnidir...",
