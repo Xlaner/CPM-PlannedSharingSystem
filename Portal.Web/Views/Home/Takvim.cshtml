@@ -152,7 +152,7 @@
                             <input class="form-control" asp-for="EtkinlikEkle.image" type="file">
                         </div>
                         <br />
-                        <h5>Api Seçimi</h5>
+                        <h5>Sosyal Medya</h5>
                         <div class="form-group">
                             @Html.DropDownListFor(elm => elm.EtkinlikEkle.ApiId,new SelectList(Model.Apiler, "Value", "Text"),new{@id = "SecilenApi",@class = "form-control"})
                         </div>
