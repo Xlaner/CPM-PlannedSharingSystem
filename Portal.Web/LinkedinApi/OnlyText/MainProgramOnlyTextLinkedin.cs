@@ -7,7 +7,7 @@ using static LinkedinTextProje.Body;
 
 namespace ConsoleApp1
 {
-    internal class MainProgramOnlyTextLinkedin
+    public class MainProgramOnlyTextLinkedin
     {
         static void Main()
         {

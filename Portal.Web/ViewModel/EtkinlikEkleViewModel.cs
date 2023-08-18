@@ -12,5 +12,6 @@ namespace Portal.Web.ViewModel
 		public IFormFile? image { get; set; }
 		public string Tekrar { get; set; }
 		public int TekrarNum { get; set; } = 1;
+        public string? ApiId { get; set; }
     }
 }

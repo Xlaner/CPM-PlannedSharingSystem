@@ -126,7 +126,7 @@ namespace Portal.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Tahvim([FromForm] EtkinlikEklePageViewModel e)
+        public async Task<IActionResult> Tahvim([FromForm] EtkinlikEklePageViewModel e)
         {
 
             if (e.EtkinlikEkle.Tekrar == "Tek Sefer")
@@ -166,6 +166,11 @@ namespace Portal.Web.Controllers
                 Dbe.description = e.EtkinlikEkle.description;
                 Dbe.Tekrar = e.EtkinlikEkle.Tekrar;
                 Dbe.TekrarNum = e.EtkinlikEkle.TekrarNum;
+
+                var apis = await _accessTokenReadRepository.GetByIdAsync(e.EtkinlikEkle.ApiId.ToString());
+
+                Dbe.ApiId= e.EtkinlikEkle.ApiId;
+                Dbe.ApiTitle = apis.ApiTuru;
                 _etkinlikWriteRepository.AddAsync(Dbe).Wait();
                 _etkinlikWriteRepository.SaveAsync().Wait();
 

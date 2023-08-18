@@ -17,6 +17,9 @@
 <h5>Etkinlik Metni</h5>
 <div class="form-group"> @Html.TextAreaFor(elm => elm.description, new { @class = "form-control" , @readonly = "readonly"}) </div>
 
+<h5>Paylaşılacak Hesap</h5>
+<div class="form-group"> @Html.TextBoxFor(elm => elm.ApiTitle, new { @class = "form-control", @type = "text" , @readonly = "readonly"}) </div>
+
 @if (!string.IsNullOrEmpty(Model.image))
 {
     <h5>Fotoğraf</h5>

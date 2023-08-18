@@ -12,7 +12,7 @@ namespace LinkedinImageProje
        
        
             [STAThread]
-        static async Task Main(string[] args)
+        static async Task Main()
         {
             LinkedinURL URLS = new LinkedinURL 
             { 

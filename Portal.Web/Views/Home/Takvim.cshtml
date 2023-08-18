@@ -154,8 +154,7 @@
                         <br />
                         <h5>Api Seçimi</h5>
                         <div class="form-group">
-                            @Html.DropDownListFor(elm => elm.EtkinlikEkle.Tekrar,new SelectList(Model.Apiler, "Value", "Text"),new{@id = "Tekrar",@class = "form-control",onchange = "dropdownValueChanged()"})
-
+                            @Html.DropDownListFor(elm => elm.EtkinlikEkle.ApiId,new SelectList(Model.Apiler, "Value", "Text"),new{@id = "SecilenApi",@class = "form-control"})
                         </div>
 
 
