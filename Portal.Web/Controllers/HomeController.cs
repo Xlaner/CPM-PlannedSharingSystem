@@ -109,16 +109,8 @@ namespace Portal.Web.Controllers
             EtkinlikEklePageViewModel Dbe = new EtkinlikEklePageViewModel()
             {
                 Apiler = ApilerListe,
-                EtkinlikEkle = new EtkinlikEkleViewModel()
-                {
-                    //start= DateTime.Now,
-                    //title = "",
-                    //description="",
-                    //Tekrar = "Tek Seferlik",
-                    //TekrarNum = 0,
-                    //image = null
+                EtkinlikEkle = new EtkinlikEkleViewModel() { }
 
-                }
 
             };
 
@@ -166,11 +158,13 @@ namespace Portal.Web.Controllers
                 Dbe.description = e.EtkinlikEkle.description;
                 Dbe.Tekrar = e.EtkinlikEkle.Tekrar;
                 Dbe.TekrarNum = e.EtkinlikEkle.TekrarNum;
+                Dbe.ApiId = e.EtkinlikEkle.ApiId;
+
 
                 var apis = await _accessTokenReadRepository.GetByIdAsync(e.EtkinlikEkle.ApiId.ToString());
-
-                Dbe.ApiId= e.EtkinlikEkle.ApiId;
                 Dbe.ApiTitle = apis.ApiTuru;
+                
+                
                 _etkinlikWriteRepository.AddAsync(Dbe).Wait();
                 _etkinlikWriteRepository.SaveAsync().Wait();
 
