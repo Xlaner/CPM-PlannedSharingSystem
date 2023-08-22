@@ -52,7 +52,7 @@
                 }
 
                     <td>@item.CreatedDate</td>
-                <td id="silButton"><a asp-controller="Home" asp-action="KullaniciSil" asp-all-route-data="@(new Dictionary<string,string>(){{"Id",item.Id.ToString()}})" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Home/KullaniciSil/@item.Id.ToString()" class="btn btn-danger silButton" data-id="@item.Id.ToString()">Sil</a></td>
                 <td><a asp-controller="Home" asp-action="KullaniciEdit" asp-all-route-data="@(new Dictionary<string,string>(){{"Id",item.Id.ToString()}})" class="btn btn-warning">Güncelle</a></td>
                 </tr>
         }
@@ -114,13 +114,73 @@
                 </div>
             </div>
     </form>
+    @section Scripts{
+        <script>
+            // Tüm "silButton" sınıfına sahip öğeleri seç
+            var deleteButtons = document.querySelectorAll(".silButton");
 
+            // Her bir buton için olay dinleyici ekle
+            deleteButtons.forEach(function (button) {
+                button.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    var apiId = button.getAttribute("data-id");
 
-    <script>
-        $('body').on('click', '#kullanicieklegetir', function () {
-            $(".modal").modal('show');
-        })
-    </script>
+                    Swal.fire({
+                        title: 'Emin misiniz?',
+                        text: "Bu kişiyi silmek istediğinizden emin misiniz?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Evet, sil!',
+                        cancelButtonText: 'İptal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            performDelete(apiId);
+                        }
+                    });
+                });
+            });
+
+            function performDelete(apiId) {
+                $.ajax({
+                    url: '/Home/KullaniciSil', // Controller işleminin URL'sini doğru şekilde belirtin
+                    method: 'POST', // Veya GET, PUT, DELETE
+                    data: { id: apiId }, // İsteğe gönderilecek veriler
+                    success: function (data) {
+                        Swal.fire({
+                            icon: 'success', // İkon tipi
+                            title: 'Silindi!', // Başlık
+                            text: 'İşlem başarıyla tamamlandı.', // Metin içeriği
+                            showConfirmButton: false, // Onay butonunu gizle
+                            timer: 1500 // Otomatik kapatılma süresi (isteğe bağlı)
+                        });
+
+                        // Belirli bir süre sonra sayfanın yeniden yüklenmesini sağla
+                        setTimeout(function () {
+                            // Takvim controllerını tetiklemek için ayrı bir AJAX isteği gönder
+                            // Burada triggerCalendarAction() veya gerekli işlemi çağırabilirsiniz
+                            location.reload(); // Sayfayı yeniden yükle
+                        }, 1500);
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Hata!',
+                            'İşlem sırasında bir hata oluştu.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        </script>
+        <script>
+            $('body').on('click', '#kullanicieklegetir', function () {
+                $(".modal").modal('show');
+            })
+        </script>
+    }
+
+    
 
 
 </body>

@@ -6,10 +6,11 @@
 
 <html>
 <head>
- <title>Admin Paneli - Api Ayarları</title>
+    <title>Admin Paneli - Api Ayarları</title>
+
 </head>
 
-<body >
+<body>
     @{
         // Örnek bir liste oluşturma
         List<SelectListItem> ApiList = new List<SelectListItem>
@@ -20,7 +21,7 @@
     };
 
     }
-<h1>API </h1>
+    <h1>API </h1>
 
 
     <table class="table table-bordered">
@@ -46,20 +47,25 @@
                             <span class="bi bi-linkedin"></span>
                         </td>
                         break;
-                    //Eklenen Api türlerinin listelenmesi için buraya da eklenmesi gerekir
+                        //Eklenen Api türlerinin listelenmesi için buraya da eklenmesi gerekir
                 }
 
 
-                
-                
+
+
                 <td> <div style="min-width:100px;">@api.TokenTitle </div></td>
                 <td>@api.Token</td>
                 <td>@api.CreatedDate</td>
-                <td id="silButton"><a asp-controller="Home" asp-action="ApiSil" asp-all-route-data="@(new Dictionary<string,string>(){{"Id",api.Id.ToString()}})" class="btn btn-danger">Sil</a></td>
+                <td>
+                    <a href="/Home/ApiSil/@api.Id.ToString()" class="btn btn-danger silButton" data-id="@api.Id.ToString()">Sil</a>
+                </td>
+
                 <td><a asp-controller="Home" asp-action="ApiGuncelle" asp-all-route-data="@(new Dictionary<string,string>(){{"Id",api.Id.ToString()}})" class="btn btn-warning">Güncelle</a></td>
             </tr>
+
+
         }
-    </table> 
+    </table>
 
 
     <button type="button" class="btn btn-primary" id="apieklebuton">Yeni Api Ekle</button>
@@ -78,34 +84,103 @@
                                 @Html.DropDownListFor(elm => elm.SingleToken.ApiTuru, new SelectList(ApiList, "Value", "Text"), new { @class = "form-control" })
                             </div>
 
-                        <h3>Açıklama</h3>
-                        <div class="form-group" id="baslik"> @Html.TextBoxFor(elm=>elm.SingleToken.TokenTitle, new {@class = "form-control", @type="text", @placeholder="Açıklama giriniz...", @value = Model?.SingleToken.TokenTitle}) </div>
-                        <h3>Token</h3>
-                        <div class="form-group" id="token"> @Html.TextBoxFor(elm=>elm.SingleToken.Token, new {@class = "form-control", @type="text", @placeholder="Token giriniz...", @value = Model?.SingleToken.Token}) </div>
-                        <div class="modal-footer">
-                            <a class="btn btn-secondary" asp-action="Api">İptal</a>
-                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                            <h3>Açıklama</h3>
+                            <div class="form-group" id="baslik"> @Html.TextBoxFor(elm=>elm.SingleToken.TokenTitle, new {@class = "form-control", @type="text", @placeholder="Açıklama giriniz...", @value = Model?.SingleToken.TokenTitle}) </div>
+                            <h3>Token</h3>
+                            <div class="form-group" id="token"> @Html.TextBoxFor(elm=>elm.SingleToken.Token, new {@class = "form-control", @type="text", @placeholder="Token giriniz...", @value = Model?.SingleToken.Token}) </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-secondary" asp-action="Api">İptal</a>
+                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                 
+                                
+                                
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
 
-             @{
-                                <script>
-                                   
-                                    document.getElementById("baslik").querySelector("input").value = "";
-                                    document.getElementById("token").querySelector("input").value = "";
-                                </script>
-                        }
+            
+                
+            
     </form>
 
-    
+
+@section Scripts{
+    <script>
+
+            document.getElementById("baslik").querySelector("input").value = "";
+            document.getElementById("token").querySelector("input").value = "";
+    </script>
+    <script>
+        // Tüm "silButton" sınıfına sahip öğeleri seç
+        var deleteButtons = document.querySelectorAll(".silButton");
+
+        // Her bir buton için olay dinleyici ekle
+        deleteButtons.forEach(function (button) {
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+                var apiId = button.getAttribute("data-id");
+
+                Swal.fire({
+                    title: 'Emin misiniz?',
+                    text: "Bu hesabı silmek istediğinizden emin misiniz?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Evet, sil!',
+                    cancelButtonText: 'İptal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        performDelete(apiId);
+                    }
+                });
+            });
+        });
+
+        function performDelete(apiId) {
+            $.ajax({
+                url: '/Home/ApiSil', // Controller işleminin URL'sini doğru şekilde belirtin
+                method: 'POST', // Veya GET, PUT, DELETE
+                data: { id: apiId }, // İsteğe gönderilecek veriler
+                success: function (data) {
+                    Swal.fire({
+                        icon: 'success', // İkon tipi
+                        title: 'Silindi!', // Başlık
+                        text: 'İşlem başarıyla tamamlandı.', // Metin içeriği
+                        showConfirmButton: false, // Onay butonunu gizle
+                        timer: 1500 // Otomatik kapatılma süresi (isteğe bağlı)
+                    });
+
+                    // Belirli bir süre sonra sayfanın yeniden yüklenmesini sağla
+                    setTimeout(function () {
+                        // Takvim controllerını tetiklemek için ayrı bir AJAX isteği gönder
+                        // Burada triggerCalendarAction() veya gerekli işlemi çağırabilirsiniz
+                        location.reload(); // Sayfayı yeniden yükle
+                    }, 1500);
+                },
+                error: function () {
+                    Swal.fire(
+                        'Hata!',
+                        'İşlem sırasında bir hata oluştu.',
+                        'error'
+                    );
+                }
+            });
+        }
+    </script>
+
+
     <script>
         $('body').on('click', '#apieklebuton', function () {
             $(".modal").modal('show');
         })
     </script>
+}
+
+
+
 
 
 </body>

@@ -12,8 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/sidebar-07/css/style.css"> <!-- Doğru CSS dosyası yolu burada olmalı -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
 </head>
   <body>
@@ -69,22 +68,28 @@
       </div>
 		</div>
 
+    <script src="~/jquery/jquery.min.js"></script>
+        @*
     <script src="~/sidebar-07/js/jquery.min.js"></script>
     <script src="~/sidebar-07/js/popper.js"></script>
+    *@
     <script src="~/sidebar-07/js/bootstrap.min.js"></script>
     <script src="~/sidebar-07/js/main.js"></script>
+    <!-- SweetAlert kütüphanesinin CSS ve JS dosyalarını ekleyin -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.17/dist/sweetalert2.min.js"></script>
 
+    @RenderSection("Scripts",false)
 
- <script>
-    $(document).ready(function () {
-        // When the Çıkış Yap button is clicked
-        $("a[href='#']").click(function () {
-            // Perform log out action here
-            // For example, redirect the user to the log out page
-            window.location.href = "/Home/Index"; // Change to the appropriate URL
+     <script>
+        $(document).ready(function () {
+            // When the Çıkış Yap button is clicked
+            $("a[href='#']").click(function () {
+                // Perform log out action here
+                // For example, redirect the user to the log out page
+                window.location.href = "/Home/Index"; // Change to the appropriate URL
+            });
         });
-    });
-</script>
+    </script>
 
  </body>
 </html>
