@@ -10,6 +10,7 @@ namespace Portal.Domain.Entities
         public string? image { get; set; }
         public string? Tekrar { get; set; }
         public int? TekrarNum { get; set; } 
+        public Guid? TekrarEtkinlikGrupId { get; set; } 
         public bool allDay { get; set; } = true;
         public string? ApiTitle { get; set; }
         public string? ApiId { get; set; }

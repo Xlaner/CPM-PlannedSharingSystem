@@ -121,10 +121,8 @@ namespace Portal.Web.Controllers
         public async Task<IActionResult> Tahvim([FromForm] EtkinlikEklePageViewModel e)
         {
 
-            if (e.EtkinlikEkle.Tekrar == "Tek Sefer")
-            {
-                e.EtkinlikEkle.TekrarNum = 1;
-            }
+            
+            Guid newGroupId = Guid.NewGuid();
             for (var i = 0; i < e.EtkinlikEkle.TekrarNum; i++)
             {
                 Etkinlik Dbe = new Etkinlik();
@@ -145,15 +143,19 @@ namespace Portal.Web.Controllers
                 if (e.EtkinlikEkle.Tekrar == "Aylık")
                 {
                     Dbe.start = e.EtkinlikEkle.start.AddMonths(i);
+                    Dbe.TekrarEtkinlikGrupId = newGroupId;
                 }
                 if (e.EtkinlikEkle.Tekrar == "Yıllık")
                 {
                     Dbe.start = e.EtkinlikEkle.start.AddYears(i);
+                    Dbe.TekrarEtkinlikGrupId = newGroupId;
                 }
                 if (e.EtkinlikEkle.Tekrar == "Tek Sefer")
                 {
                     Dbe.start = e.EtkinlikEkle.start;
+                    Dbe.TekrarEtkinlikGrupId = null;
                 }
+                
                 Dbe.title = e.EtkinlikEkle.title;
                 Dbe.description = e.EtkinlikEkle.description;
                 Dbe.Tekrar = e.EtkinlikEkle.Tekrar;
@@ -209,6 +211,7 @@ namespace Portal.Web.Controllers
 
 
             }
+
 
             _etkinlikWriteRepository.RemoveAsync(Id).Wait();
             _etkinlikWriteRepository.SaveAsync().Wait();

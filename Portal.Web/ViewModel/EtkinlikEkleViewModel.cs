@@ -9,7 +9,7 @@ namespace Portal.Web.ViewModel
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime start { get; set; } = DateTime.Now.Date;
-		public IFormFile? image { get; set; }
+        public IFormFile? image { get; set; }
 		public string Tekrar { get; set; }
 		public int TekrarNum { get; set; } = 1;
         public string? ApiId { get; set; }
