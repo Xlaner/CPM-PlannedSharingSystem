@@ -33,10 +33,10 @@
                             @Html.DropDownListFor(elm => elm.ApiTuru, new SelectList(ApiList, "Value", "Text"), new { @class = "form-control" })
                         </div>
                         <h3>Açıklama</h3>
-                        <div class="form-group" id="kullaniciadi"> @Html.TextBoxFor(elm=>elm.TokenTitle, new {@class = "form-control", @type="text", @placeholder="Başlık giriniz...", @value = Model?.TokenTitle}) </div>
+                        <div class="form-group" id="baslik"> @Html.TextBoxFor(elm=>elm.TokenTitle, new {@class = "form-control", @type="text", @placeholder="Başlık giriniz...", @value = Model?.TokenTitle}) </div>
 
                         <h3>Token</h3>
-                        <div class="form-group" id="sifre"> @Html.TextBoxFor(elm=>elm.Token, new {@class = "form-control", @type="text", @placeholder="Token giriniz...", @value = Model?.Token}) </div>
+                        <div class="form-group" id="token"> @Html.TextBoxFor(elm=>elm.Token, new {@class = "form-control", @type="text", @placeholder="Token giriniz...", @value = Model?.Token}) </div>
 
                         <h3>Son Değişiklik Tarihi</h3>
                          <div class="form-group" id="createdDate"> @Html.TextBoxFor(elm=>elm.CreatedDate, new {@class = "form-control", @type="text", @value = Model?.CreatedDate , @readonly = "readonly"}) </div>
