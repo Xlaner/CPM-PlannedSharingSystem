@@ -145,12 +145,26 @@
                         <h5>Etkinlik Adı</h5>
                         <div class="form-group"> @Html.TextBoxFor(elm=>elm.EtkinlikEkle.title, new {@class = "form-control", @type="text", @placeholder="Etkinlik adını giriniz...", @value = Model?.EtkinlikEkle.title}) </div>
 
-                        <h5>Metin İçeriği</h5>
-                        <div class="form-group"> @Html.TextAreaFor(elm=>elm.EtkinlikEkle.description, new {@class = "form-control", @type="text", @placeholder="Etkinlik metnini giriniz...", @value = Model?.EtkinlikEkle.description}) </div>
-                        <div>
-                            <h5>Fotoğraf Yükle</h5>
-                            <input class="form-control" asp-for="EtkinlikEkle.image" type="file">
-                        </div>
+                        <h5>Fotoğraf Yükle</h5>
+                        <input class="form-control" asp-for="EtkinlikEkle.image" type="file" id="fileName" accept=".jpeg, .jpg, .png" onchange="validateFileType()">
+
+                        <script type="text/javascript">
+                         function validateFileType() {
+                         var fileName = document.getElementById("fileName").value;
+                         var idxDot = fileName.lastIndexOf(".") + 1;
+                         var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+        
+                         var kaydetButton = document.getElementById("kaydet");
+
+                         if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+                         kaydetButton.removeAttribute("disabled"); 
+                         } else {
+                         alert("Sadece jpg/jpeg ve png yükleyebilirsiniz!");
+                        kaydetButton.setAttribute("disabled", "true"); 
+                          }
+                          }
+                        </script>
+
                         <br />
                         <h5>Sosyal Medya</h5>
                         <div class="form-group">
@@ -162,7 +176,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                        <button type="submit" class="btn btn-primary" id="kaydet" disabled>Kaydet</button>
                     </div>
                 </div>
             </div>
