@@ -5,25 +5,25 @@ using System.Text;
 
 
 
-namespace LinkedinImageProje
+namespace Portal.Web.Apis.LinkedinApi.ImageAndText
 {
     public class MainProgramImageLinkedin
     {
-       
-       
-            [STAThread]
+
+
+        [STAThread]
         static async Task Main()
         {
-            LinkedinURL URLS = new LinkedinURL 
-            { 
+            LinkedinURL URLS = new LinkedinURL
+            {
                 accessToken = "AccessToken",//Your accsess Token
-                
+
                 fileUploadPath = @"/ExapmlePath/Photo.png", //path of the photo
                 imageText = "", //Content Text
 
 
                 contentType = "application/json",
-                
+
                 imageText2 = "ExampleText",
                 imageTitle = "Title",
             };
@@ -44,7 +44,7 @@ namespace LinkedinImageProje
                         registerUploadRequest = new Registeruploadrequest
                         {
                             recipes = new[] { "urn:li:digitalmediaRecipe:feedshare-image" },
-                            owner = "urn:li:person:"+profileId,
+                            owner = "urn:li:person:" + profileId,
                             serviceRelationships = new[]
                             {
                             new Servicerelationship

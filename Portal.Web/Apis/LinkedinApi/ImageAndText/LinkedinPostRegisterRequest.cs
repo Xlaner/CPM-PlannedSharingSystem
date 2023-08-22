@@ -1,6 +1,4 @@
-﻿
-
-namespace LinkedinImageProje
+﻿namespace Portal.Web.Apis.LinkedinApi.ImageAndText
 {
 
     public class LinkedinPostRegisterLinkedin

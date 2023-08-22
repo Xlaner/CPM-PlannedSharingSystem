@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 
-namespace LinkedinTextProje
+namespace Portal.Web.Apis.LinkedinApi.OnlyText
 {
     public class Body
     {

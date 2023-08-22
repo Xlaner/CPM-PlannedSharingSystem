@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 
-namespace LinkedinImageProje
+namespace Portal.Web.Apis.LinkedinApi.ImageAndText
 {
 
     public class LinkedinPostImageShareRequest
