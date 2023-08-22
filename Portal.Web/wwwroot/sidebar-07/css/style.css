@@ -597,7 +597,7 @@ pre {
 .container-fluid {
     width: 100%;
     padding-right: 15px;
-    padding-left: 15px;
+    padding-left: 67px;
     margin-right: auto;
     margin-left: auto;
 }
@@ -11512,23 +11512,29 @@ h1, h2, h3, h4, h5,
 }
 
 
-
+.total-padding{ 
+    padding-left:235px !important;
+}
 
 #sidebar {
-    min-width: 270px;
-    max-width: 270px;
+    min-height:100vh;
+    position: fixed;
+    z-index: 1;
+    min-width: 235px;
+    max-width: 235px;
     background: #3e64ff;
     color: #fff;
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
-    box-shadow: 20px 0 60px rgba(0, 0, 0, 0.4); /* Adjust the shadow properties as needed */
+    box-shadow: 8px 0 60px rgba(0, 0, 0, 0.4); /* Adjust the shadow properties as needed */
 }
 
     #sidebar.active {
         min-width: 80px;
         max-width: 80px;
         text-align: center;
+        min-height: 100%;
     }
 
         #sidebar.active ul.components li {

@@ -48,37 +48,23 @@
  
         </ul>
 
-        <div class="footer">
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br /> 
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-        	    <p style="text-align:center"> © 2023 Tüm Hakları Saklıdır.</p>
-                <p style="text-align:center">- Created By Berke && Ömer -</p>
+        <div class="footer" style="margin:5px;">
+        	    <p style="text-align:center; font-size:11px;" > © 2023 Tüm Hakları Saklıdır.</p>
+                <p style="text-align:center ; font-size:11px;">Created By Berke && Ömer</p>
+                           
         </div>
     	</nav>
 
         <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5">
 
-        <nav >
+   
           <div class="container-fluid">
-           
-          </div>
-        </nav>
+                   @RenderBody() <!-- This is where the content from your Razor pages will be injected -->
 
-        @RenderBody() <!-- This is where the content from your Razor pages will be injected -->
+          </div>
+   
+
 
       </div>
 		</div>

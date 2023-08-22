@@ -19,18 +19,18 @@
 
     <table class="table table-bordered" >
         <tr>
-            <td> <div >Kullanıcı ID</div></td>
-            <td>Kullanıcı Adı</td>
+            <td>&nbsp;&nbsp; Kullanıcı ID</td>
+            <td >Kullanıcı Adı</td>
             <td>Kullanıcı Rolü</td>
             <td>Son Değişiklik</td>
             <td>Sil</td>
-            <td>Güncelle</td>
+            <td >Güncelle</td>
 
         </tr>
         @foreach (var item in Model.User)
         {
             <tr>
-                <td> <div style="min-width:100px;">@item.Id </div></td>
+                <td >&nbsp;&nbsp; @item.Id </td>
                 <td>@item.UserName</td>
                 <td id="deneme_@item.Id"></td>
                 @{
