@@ -70,7 +70,7 @@
 
     <button type="button" class="btn btn-primary" id="apieklebuton">Yeni Api Ekle</button>
 
-    <form method="post" action="/Home/ApiEkle" enctype="multipart/form-data">
+<form method="post" action="/Home/ApiEkle" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -92,7 +92,30 @@
                                 <a class="btn btn-secondary" asp-action="Api">İptal</a>
                                 <button type="submit" class="btn btn-primary">Kaydet</button>
                                  
-                                
+                                 <script>
+        function validateForm() {
+        var description = document.getElementById("baslik").getElementsByTagName("input")[0].value;
+        var token = document.getElementById("token").getElementsByTagName("input")[0].value;
+        
+        if (description.trim() === "") {
+            alert("Açıklama boş olamaz!");
+            return false; // Prevent form submission
+        }
+        
+        if (token.trim() === "") {
+            alert("Token boş olamaz!");
+            return false; // Prevent form submission
+        }
+        
+        // If both fields are filled, allow form submission
+        return true;
+    }
+</script>
+
+
+
+
+
                                 
                             </div>
                         </div>
