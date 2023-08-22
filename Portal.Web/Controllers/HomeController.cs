@@ -162,7 +162,7 @@ namespace Portal.Web.Controllers
 
 
                 var apis = await _accessTokenReadRepository.GetByIdAsync(e.EtkinlikEkle.ApiId.ToString());
-                Dbe.ApiTitle = apis.ApiTuru;
+                Dbe.ApiTitle = apis.ApiTuru+ " - " + apis.TokenTitle;
                 
                 
                 _etkinlikWriteRepository.AddAsync(Dbe).Wait();
