@@ -11667,6 +11667,9 @@ a[data-toggle="collapse"] {
 
 .footer {
     padding: 0 30px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 @media (max-width: 991.98px) {
