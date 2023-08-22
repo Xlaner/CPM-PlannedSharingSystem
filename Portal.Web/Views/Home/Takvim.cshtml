@@ -100,7 +100,7 @@
 
 
 
-    <form method="post" action="/Home/Tahvim" enctype="multipart/form-data">
+    <form method="post" action="/Home/Tahvim" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -143,19 +143,44 @@
 
 
                         <h5>Etkinlik Adı</h5>
-                        <div class="form-group"> @Html.TextBoxFor(elm=>elm.EtkinlikEkle.title, new {@class = "form-control", @type="text", @placeholder="Etkinlik adını giriniz...", @value = Model?.EtkinlikEkle.title}) </div>
+                        <div class="form-group" id="etkinlikadi"> @Html.TextBoxFor(elm=>elm.EtkinlikEkle.title, new {@class = "form-control", @type="text", @placeholder="Etkinlik adını giriniz...", @value = Model?.EtkinlikEkle.title}) </div>
 
                         <h5>Fotoğraf Yükle</h5>
                         <input class="form-control" asp-for="EtkinlikEkle.image" type="file" id="fileName" accept=".jpeg, .jpg, .png" onchange="validateFileType()">
 
-                        <script type="text/javascript">
-                         function validateFileType() {
-                         var fileName = document.getElementById("fileName").value;
-                         var idxDot = fileName.lastIndexOf(".") + 1;
-                         var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-        
-                         var kaydetButton = document.getElementById("kaydet");
+                        <script> 
+                             function validateForm() {
+                              var description = document.getElementById("etkinlikadi").getElementsByTagName("input")[0].value;
+                             if (description.trim() === "") {
+                                  alert("Etkinlik adı boş olamaz!");
+                                     return false; // Prevent form submission
+                                 }
+                      return true;
+                                              }
+                            </script>
 
+
+                      <script type="text/javascript">
+function validateFileType() {
+    var fileName = document.getElementById("fileName").value;
+    var idxDot = fileName.lastIndexOf(".") + 1;
+    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    var kaydetButton = document.getElementById("kaydet");
+    
+    if (extFile === "" || extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+        kaydetButton.removeAttribute("disabled");
+    } else {
+        alert("Sadece jpg/jpeg ve png yükleyebilirsiniz!");
+        kaydetButton.setAttribute("disabled", "true");
+    }
+}
+
+// Dosya seçimi yapıldığında butonu etkinleştir
+document.getElementById("fileName").addEventListener("change", validateFileType);
+</script>
+
+<<<<<<< HEAD
+=======
                          if (extFile == "jpg" || extFile == "jpeg" || extFile == "png" ) {
                          kaydetButton.removeAttribute("disabled"); 
                          } else {
@@ -164,6 +189,7 @@
                           }
                           }
                         </script>
+>>>>>>> 57a80d99775c77239174e9711976d3f3c146cfde
 
                         <br />
                         <h5>Sosyal Medya</h5>
@@ -176,7 +202,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                        <button type="submit" class="btn btn-primary" id="kaydet" disabled>Kaydet</button>
+                        <button type="submit" class="btn btn-primary" id="kaydet">Kaydet</button>
                     </div>
                 </div>
             </div>
