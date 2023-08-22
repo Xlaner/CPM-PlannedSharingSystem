@@ -195,6 +195,18 @@ namespace Portal.Web.Controllers
         {
 
             var data = _etkinlikReadRepository.GetAll();
+            foreach (var item in data)
+            {
+                if(item.start < DateTime.Now)
+                {
+                    item.allDay = false;
+
+                }
+                else
+                {
+                    continue;
+                }
+            }
 
 
             return Json(data);
