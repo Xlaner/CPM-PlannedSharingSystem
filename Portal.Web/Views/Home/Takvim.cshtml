@@ -21,9 +21,9 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
     <script src="~/fullcalendar-5.11.3/lib/main.js"></script>
+
+    
 
     <style>
 
@@ -85,7 +85,7 @@
 </head>
 <body>
     @{
-        // Örnek bir liste oluşturma
+       
         List<SelectListItem> TekrarlanmaTuru = new List<SelectListItem>
     {
     new SelectListItem { Value = "Tek Sefer", Text = "Tek Seferlik" },
@@ -96,9 +96,6 @@
     };
 
     }
-
-
-
 
     <form method="post" action="/Home/Tahvim" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -133,12 +130,6 @@
                         <h5>Fotoğraf Yükle</h5>
                         <input class="form-control" asp-for="EtkinlikEkle.image" type="file" id="fileName" accept=".jpeg, .jpg, .png" onchange="validateFileType()">
 
-                        
-
-
-                      
-                        
-
                         <br />
                         <h5>Sosyal Medya</h5>
                         <div class="form-group">
@@ -157,7 +148,6 @@
         </div>
     </form>
 
-
     <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -175,10 +165,6 @@
         </div>
     </div>
 
-
-
-
-
     <div style="margin-top:1px !important; margin: 0 auto; padding: 10px 0px 10px 0px;">
         <h2 style="color:black; text-align:center;">Etkinlik Takvimi</h2>
         <div class="text-center">
@@ -188,24 +174,7 @@
         <div id='calendar'></div>
     </div>
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.min.js"></script>
-
-    
-
-
-
-
-
-
-
-
     <div class="black-container" id="black"></div>
-
-
-
-
 
     <div class="popup-container" id="popup-data">
         <h2 class="popup-title my-4" id="deneme">Etkinlik Oluşturma Ekranı</h2>
@@ -403,7 +372,5 @@
         </script>
     }
 </body>
-
-
 
 </html>
