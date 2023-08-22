@@ -197,7 +197,7 @@ namespace Portal.Web.Controllers
             var data = _etkinlikReadRepository.GetAll();
             foreach (var item in data)
             {
-                if(item.start < DateTime.Now)
+                if(item.start.Date < DateTime.Now.Date)
                 {
                     item.allDay = false;
 
