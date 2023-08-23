@@ -189,6 +189,7 @@
 
     
     @section Scripts{
+        
         <script>
             function validateForm() {
                 var description = document.getElementById("etkinlikadi").getElementsByTagName("input")[0].value;
@@ -199,6 +200,7 @@
                 return true;
             }
         </script>  @* Etkinlik adı doluluk kontrolü*@
+        
         <script>
             function dropdownValueChanged() {
                 var selectedValue = document.getElementById("Tekrar").value;
@@ -215,6 +217,7 @@
                 }
             }
         </script>  @* Tekrar sayısı combox kodları*@
+       
         <script type="text/javascript">
             function validateFileType() {
                 var fileName = document.getElementById("fileName").value;
@@ -233,13 +236,14 @@
             // Dosya seçimi yapıldığında butonu etkinleştir
             document.getElementById("fileName").addEventListener("change", validateFileType);
         </script> @* Dosya formatı kontrol kodları*@
+        
         <script>
             $(document).ready(function () {
                 $('#deleteButton').on('click', function (e) {
                     e.preventDefault();
 
                     Swal.fire({
-                        title: 'Emin misiniz?',
+                        title: 'Bu etkinliği silmek istediğinizden emin misiniz?',
                         text: "Bu işlem geri alınamaz!",
                         icon: 'warning',
                         showCancelButton: true,
@@ -287,6 +291,7 @@
                 });
             }
         </script>  @* SwearAlert kodları (silme Butonu) *@
+        
         <script>
 
             document.addEventListener('DOMContentLoaded', function () {
@@ -395,7 +400,7 @@
                     e.preventDefault();
 
                     Swal.fire({
-                        title: 'Emin misiniz?',
+                        title: 'Bütün tekrarları silmek istediğinizden emin misiniz?',
                         text: "Bu işlem geri alınamaz!",
                         icon: 'warning',
 
@@ -451,7 +456,7 @@
                 });
             }
 
-        </script>  @* SwearAlert kodları (silme Butonu) *@
+        </script>  @* SwearAlert kodları (Toplu silme Butonu) *@
 
     }
 </body>

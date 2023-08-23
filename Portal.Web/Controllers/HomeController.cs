@@ -101,7 +101,7 @@ namespace Portal.Web.Controllers
 
             foreach (var item in denem)
             {
-                ApilerListe.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.TokenTitle });
+                ApilerListe.Add(new SelectListItem { Value = item.Id.ToString(), Text =item.ApiTuru + " - " + item.TokenTitle  });
             }
 
 
