@@ -60,9 +60,6 @@ namespace Portal.Persistence.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("HepsiniSil")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Tekrar")
                         .HasColumnType("nvarchar(max)");
 

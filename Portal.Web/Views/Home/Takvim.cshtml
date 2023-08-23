@@ -81,6 +81,7 @@
             text-align: center;
         }
 
+
     </style>
 </head>
 <body>
@@ -159,7 +160,11 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-                    <a id="deleteButton" asp-controller="Home" asp-action="EtkinlikSil" asp-all-route-data="@(new Dictionary<string,string>(){{"Id","asd"}})" class="btn btn-danger">Sil</a>
+                    <a id="deleteButton" asp-controller="Home" asp-action="EtkinlikSil" asp-all-route-data="@(new Dictionary<string,string>(){{"Id",""}})" class="btn btn-danger">Sil</a>
+            
+                    <a id="deleteButtonAll" asp-controller="Home" asp-action="deneme" asp-all-route-data="@(new Dictionary<string,string>(){{"Id",""}})" class="btn btn-danger">Birlikte Oluşturulan Hepsini Sil</a>
+
+
                 </div>
             </div>
         </div>
@@ -180,7 +185,7 @@
         <h2 class="popup-title my-4" id="deneme">Etkinlik Oluşturma Ekranı</h2>
         <a id="buton" class="btn btn-primary" onclick="closePopupData()">kapat</a>
     </div>
-
+    
 
     
     @section Scripts{
@@ -193,7 +198,7 @@
                 }
                 return true;
             }
-        </script>
+        </script>  @* Etkinlik adı doluluk kontrolü*@
         <script>
             function dropdownValueChanged() {
                 var selectedValue = document.getElementById("Tekrar").value;
@@ -209,7 +214,7 @@
                     document.getElementById("TekrarNum").style.display = "none"; // Görünürlüğü gizle
                 }
             }
-        </script>
+        </script>  @* Tekrar sayısı combox kodları*@
         <script type="text/javascript">
             function validateFileType() {
                 var fileName = document.getElementById("fileName").value;
@@ -227,7 +232,7 @@
 
             // Dosya seçimi yapıldığında butonu etkinleştir
             document.getElementById("fileName").addEventListener("change", validateFileType);
-        </script>
+        </script> @* Dosya formatı kontrol kodları*@
         <script>
             $(document).ready(function () {
                 $('#deleteButton').on('click', function (e) {
@@ -244,6 +249,7 @@
                         cancelButtonText: 'İptal'
                     }).then((result) => {
                         if (result.isConfirmed) {
+                          
                             performDelete(); // Onay verildiğinde silme işlemini başlat
                         }
                     });
@@ -280,7 +286,7 @@
                     }
                 });
             }
-        </script>
+        </script>  @* SwearAlert kodları (silme Butonu) *@
         <script>
 
             document.addEventListener('DOMContentLoaded', function () {
@@ -316,16 +322,28 @@
 
                     eventClick: function (info) {
                         var eventId = info.event.id;
-
+                        
                         //window.location = "/Home/TiklananEtkinlik?eventId=" + eventId;
                         $.ajax({
                             url: '/Home/TiklananEtkinlikPartial',
                             method: 'GET',
                             data: { eventId: eventId },
                             success: function (resp) {
+                                $("#deleteButtonAll").hide();
                                 $("#editEventModal .modal-body").html(resp);
                                 $("#editEventModal").modal('show');
                                 $("#deleteButton").attr("href", "/Home/EtkinlikSil?Id=" + $("#partialItemId").val());
+                                $("#deleteButtonAll").attr("href", "/Home/EtkinlikSil?Id=" + $("#partialItemId").val());
+                                var denem = $("#partialItemGroupId").val();
+                                if (denem != "") {
+                                    $("#deleteButtonAll").show();
+                                }
+                                else{
+                                    $("#deleteButtonAll").hide();
+                                }
+                               
+                               
+
                             }
                         })
                     },
@@ -369,7 +387,72 @@
 
 
 
-        </script>
+        //</script>  @* Calendar kodları*@
+
+        <script>
+            $(document).ready(function () {
+                $('#deleteButtonAll').on('click', function (e) {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Emin misiniz?',
+                        text: "Bu işlem geri alınamaz!",
+                        icon: 'warning',
+
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Evet, sil!',
+                        cancelButtonText: 'İptal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            
+                            var Id = $("#partialItemId").val();
+
+                            performDeleteAll(Id); // Onay verildiğinde silme işlemini başlat
+                        }
+                    });
+                });
+            });
+
+
+
+            function performDeleteAll(Id) {
+                $.ajax({
+                    url: '/Home/EtkinlikSilAll', // Controller adı ve action adı
+                    method: 'POST',
+                    data: { id: Id }, // Id değerini iletmek
+                    error: function (data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Tüm Tekrarlar Silindi!',
+                            text: data.message, // İşlem sonucu mesajı
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    },
+                    success: function (data) {
+                        Swal.fire(
+                            'success',
+                            'Tüm Tekrarlar Silindi!',
+                            //showConfirmButton: false,
+                            data.message,
+                            
+
+                        );
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            }
+
+        </script>  @* SwearAlert kodları (silme Butonu) *@
+
     }
 </body>
 

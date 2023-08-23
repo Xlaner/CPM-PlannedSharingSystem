@@ -109,7 +109,8 @@ namespace Portal.Web.Controllers
             EtkinlikEklePageViewModel Dbe = new EtkinlikEklePageViewModel()
             {
                 Apiler = ApilerListe,
-                EtkinlikEkle = new EtkinlikEkleViewModel() { }
+                EtkinlikEkle = new EtkinlikEkleViewModel() { },
+                etkinliks = _etkinlikReadRepository.Get().ToList()
 
 
             };
@@ -215,6 +216,48 @@ namespace Portal.Web.Controllers
         public async Task<IActionResult> EtkinlikSil(string Id)
         {
             Etkinlik Dbe = await _etkinlikReadRepository.GetByIdAsync(Id);
+            
+            if (Dbe.image != null)
+            {
+                string wwwRootPath = _hostingEnvironment.WebRootPath;
+                string yol = Path.Combine(wwwRootPath, "Images", Dbe.image);
+                System.IO.File.Delete(yol);
+
+
+            }
+           
+            _etkinlikWriteRepository.RemoveAsync(Id).Wait();
+            _etkinlikWriteRepository.SaveAsync().Wait();
+
+
+
+            return RedirectToAction("Takvim", "Home");
+        }
+        [HttpPost]
+        public async Task<IActionResult> EtkinlikSilAll(string id)
+        {
+           
+            Etkinlik Dbe = await _etkinlikReadRepository.GetByIdAsync(id);
+            var group = _etkinlikReadRepository.Get().ToList();
+
+            foreach(var item in group)
+            {
+                if(Dbe.TekrarEtkinlikGrupId == item.TekrarEtkinlikGrupId)
+                {
+                    if (item.image != null)
+                    {
+                        string wwwRootPath = _hostingEnvironment.WebRootPath;
+                        string yol = Path.Combine(wwwRootPath, "Images", item.image);
+                        System.IO.File.Delete(yol);
+
+
+                    }
+                    _etkinlikWriteRepository.RemoveAsync(item.Id.ToString()).Wait();
+                    _etkinlikWriteRepository.SaveAsync().Wait();
+                }
+
+            }
+
             if (Dbe.image != null)
             {
                 string wwwRootPath = _hostingEnvironment.WebRootPath;
@@ -224,15 +267,13 @@ namespace Portal.Web.Controllers
 
             }
 
-
-            _etkinlikWriteRepository.RemoveAsync(Id).Wait();
+            _etkinlikWriteRepository.RemoveAsync(id).Wait();
             _etkinlikWriteRepository.SaveAsync().Wait();
 
 
 
             return RedirectToAction("Takvim", "Home");
         }
-
 
 
 

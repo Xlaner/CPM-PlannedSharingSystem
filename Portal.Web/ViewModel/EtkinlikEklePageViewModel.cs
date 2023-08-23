@@ -8,5 +8,6 @@ namespace Portal.Web.ViewModel
     {
         public List<SelectListItem> Apiler { get; set; }
         public EtkinlikEkleViewModel EtkinlikEkle { get; set; }
+        public List<Etkinlik> etkinliks { get; set; }
     }
 }
