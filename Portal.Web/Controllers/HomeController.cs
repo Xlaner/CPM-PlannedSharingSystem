@@ -19,12 +19,16 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Identity;
+
+
 
 namespace Portal.Web.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        
         private readonly IWebHostEnvironment _hostingEnvironment;
         readonly private IAccessTokenReadRepository _accessTokenReadRepository;
         readonly private IAccessTokenWriteRepository _accessTokenWriteRepository;
@@ -90,6 +94,14 @@ namespace Portal.Web.Controllers
             }
 
             return View(new HomeIndexViewModel { UserName = model.UserName, HasError = true, Error = "Kullanıcı Adı Veya Şifre Hatalı!" });
+        }
+        public async Task<IActionResult> CikisYap()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Home");
+
+            
         }
 
         //-------------------------------------------------------------
