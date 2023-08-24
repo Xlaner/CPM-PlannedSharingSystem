@@ -9,8 +9,8 @@ builder.Services.AddPersistenceServices();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options=> 
 {
     options.Cookie.Name = "NetCoreMvcAuth";
-    options.LoginPath = "/Home/Index";
-    options.AccessDeniedPath = "/Home/Index";
+    options.LoginPath = "/Login/Index";
+    options.AccessDeniedPath = "/Login/Index";
     options.ExpireTimeSpan = TimeSpan.FromHours(1);
     
 });

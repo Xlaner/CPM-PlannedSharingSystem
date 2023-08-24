@@ -54,55 +54,12 @@ namespace Portal.Web.Controllers
         //Login Ekranı İşlemleri
 
 
-        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> Index(HomeIndexViewModel model)
-        {
-            if (string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.Password))
-                return View(new HomeIndexViewModel { UserName = model.UserName, HasError = true, Error = "Kullanıcı adı ve şifre alanları boş olamaz!" });
 
-            var datas = _userReadRepository.GetAll();
-            var dataSearch = datas.Where(elm => elm.UserName == model.UserName && elm.Password == model.Password);
-
-            if (dataSearch.Count() == 1)
-            {
-                model.Role = (int)dataSearch.First().Role;
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name,model.UserName),
-                    new Claim(ClaimTypes.Role,model.Role.ToString())
-                };
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var authProperties = new AuthenticationProperties() { ExpiresUtc = DateTime.UtcNow.AddHours(1) };
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-
-                if (model.Role == 2)
-                {
-
-                    return RedirectToAction("AdminKullaniciListesi");
-                }
-
-                //Console.WriteLine(model.Id)
-                return RedirectToAction("Takvim");
-            }
-
-            return View(new HomeIndexViewModel { UserName = model.UserName, HasError = true, Error = "Kullanıcı Adı Veya Şifre Hatalı!" });
-        }
-        public async Task<IActionResult> CikisYap()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            return RedirectToAction("Index", "Home");
-
-            
-        }
 
         //-------------------------------------------------------------
         //Takvim sayfası işlemleri
