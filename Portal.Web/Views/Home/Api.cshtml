@@ -90,31 +90,9 @@
                             <div class="form-group" id="token"> @Html.TextBoxFor(elm=>elm.SingleToken.Token, new {@class = "form-control", @type="text", @placeholder="Token giriniz...", @value = Model?.SingleToken.Token}) </div>
                             <div class="modal-footer">
                                 <a class="btn btn-secondary" asp-action="Api">İptal</a>
-                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                <button id="SubmitButton" type="submit" style="display:none">Kaydet</button>
+                                <button id="KaydetButton" class="btn btn-primary">Kaydet</button>
                                  
-                                 <script>
-        function validateForm() {
-        var description = document.getElementById("baslik").getElementsByTagName("input")[0].value;
-        var token = document.getElementById("token").getElementsByTagName("input")[0].value;
-        
-        if (description.trim() === "") {
-            alert("Açıklama boş olamaz!");
-            return false; // Prevent form submission
-        }
-        
-        if (token.trim() === "") {
-            alert("Token boş olamaz!");
-            return false; // Prevent form submission
-        }
-        
-        // If both fields are filled, allow form submission
-        return true;
-    }
-</script>
-
-
-
-
 
                                 
                             </div>
@@ -130,81 +108,139 @@
 
 
 @section Scripts{
-    <script>
+        <script>
+            function validateForm() {
+                var description = document.getElementById("baslik").getElementsByTagName("input")[0].value;
+                var token = document.getElementById("token").getElementsByTagName("input")[0].value;
 
-            document.getElementById("baslik").querySelector("input").value = "";
-            document.getElementById("token").querySelector("input").value = "";
-    </script>
-    <script>
-        // Tüm "silButton" sınıfına sahip öğeleri seç
-        var deleteButtons = document.querySelectorAll(".silButton");
+                if (description.trim() === "") {
+                    alert("Açıklama boş olamaz!");
+                    return false; // Prevent form submission
+                }
 
-        // Her bir buton için olay dinleyici ekle
-        deleteButtons.forEach(function (button) {
-            button.addEventListener("click", function (e) {
-                e.preventDefault();
-                var apiId = button.getAttribute("data-id");
+                if (token.trim() === "") {
+                    alert("Token boş olamaz!");
+                    return false; // Prevent form submission
+                }
+                // If both fields are filled, allow form submission
+                return true;
+            }
 
-                Swal.fire({
-                    title: 'Emin misiniz?',
-                    text: "Bu hesabı silmek istediğinizden emin misiniz?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Evet, sil!',
-                    cancelButtonText: 'İptal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        performDelete(apiId);
-                    }
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('#KaydetButton').on('click', function (e) {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Değişiklikler kaydedilsin mi?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Evet, Kaydet',
+                        cancelButtonText: 'İptal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            clickButton();
+
+                        }
+                    });
                 });
             });
-        });
 
-        function performDelete(apiId) {
-            $.ajax({
-                url: '/Home/ApiSil', // Controller işleminin URL'sini doğru şekilde belirtin
-                method: 'POST', // Veya GET, PUT, DELETE
-                data: { id: apiId }, // İsteğe gönderilecek veriler
-                success: function (data) {
+            function clickButton() {
+                // Butonun DOM öğesini seçiyoruz
+                var button = document.getElementById("SubmitButton");
+                
+                // Simüle edilmiş bir tıklama olayı oluşturuyoruz
+                var event = new MouseEvent("click", {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                });
+
+                // Oluşturduğumuz tıklama olayını butona gönderiyoruz
+                button.dispatchEvent(event);
+                validateForm();
+
+            }
+
+        </script>
+
+        <script>
+
+                document.getElementById("baslik").querySelector("input").value = "";
+                document.getElementById("token").querySelector("input").value = "";
+        </script>
+    
+       
+   
+        <script>
+            // Tüm "silButton" sınıfına sahip öğeleri seç
+            var deleteButtons = document.querySelectorAll(".silButton");
+
+            // Her bir buton için olay dinleyici ekle
+            deleteButtons.forEach(function (button) {
+                button.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    var apiId = button.getAttribute("data-id");
+
                     Swal.fire({
-                        icon: 'success', // İkon tipi
-                        title: 'Silindi!', // Başlık
-                        text: 'İşlem başarıyla tamamlandı.', // Metin içeriği
-                        showConfirmButton: false, // Onay butonunu gizle
-                        timer: 1500 // Otomatik kapatılma süresi (isteğe bağlı)
+                        title: 'Emin misiniz?',
+                        text: "Bu hesabı silmek istediğinizden emin misiniz?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Evet, sil!',
+                        cancelButtonText: 'İptal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            performDelete(apiId);
+                        }
                     });
-
-                    // Belirli bir süre sonra sayfanın yeniden yüklenmesini sağla
-                    setTimeout(function () {
-                        // Takvim controllerını tetiklemek için ayrı bir AJAX isteği gönder
-                        // Burada triggerCalendarAction() veya gerekli işlemi çağırabilirsiniz
-                        location.reload(); // Sayfayı yeniden yükle
-                    }, 1500);
-                },
-                error: function () {
-                    Swal.fire(
-                        'Hata!',
-                        'İşlem sırasında bir hata oluştu.',
-                        'error'
-                    );
-                }
+                });
             });
-        }
-    </script>
 
+            function performDelete(apiId) {
+                $.ajax({
+                    url: '/Home/ApiSil', // Controller işleminin URL'sini doğru şekilde belirtin
+                    method: 'POST', // Veya GET, PUT, DELETE
+                    data: { id: apiId }, // İsteğe gönderilecek veriler
+                    success: function (data) {
+                        Swal.fire({
+                            icon: 'success', // İkon tipi
+                            title: 'Silindi!', // Başlık
+                            text: 'İşlem başarıyla tamamlandı.', // Metin içeriği
+                            showConfirmButton: false, // Onay butonunu gizle
+                            timer: 1500 // Otomatik kapatılma süresi (isteğe bağlı)
+                        });
 
-    <script>
-        $('body').on('click', '#apieklebuton', function () {
-            $(".modal").modal('show');
-        })
-    </script>
-}
+                        // Belirli bir süre sonra sayfanın yeniden yüklenmesini sağla
+                        setTimeout(function () {
+                            // Takvim controllerını tetiklemek için ayrı bir AJAX isteği gönder
+                            // Burada triggerCalendarAction() veya gerekli işlemi çağırabilirsiniz
+                            location.reload(); // Sayfayı yeniden yükle
+                        }, 1500);
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Hata!',
+                            'İşlem sırasında bir hata oluştu.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        </script>
 
-
-
-
+        <script>
+            $('body').on('click', '#apieklebuton', function () {
+                $(".modal").modal('show');
+            })
+        </script>
+    }
 
 </body>
 </html>
