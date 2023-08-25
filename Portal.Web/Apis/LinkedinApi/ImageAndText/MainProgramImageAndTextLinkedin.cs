@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Portal.Application.Repositories;
 using Portal.Domain.Entities;
 using System.Text;
+using System.Timers;
 
 
 
@@ -11,9 +12,22 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
 {
     public class MainProgramImageLinkedin
     {
+        public class TimerManager
+        {
+            private Timer _timer;
 
-        [STAThread]
-        static async Task Main(IAccessTokenWriteRepository accessTokenWriteRepository, IEtkinlikWriteRepository etkinlikWriteRepository, IEtkinlikReadRepository etkinlikReadRepository, IAccessTokenReadRepository accessTokenReadRepository)
+            public TimerManager()
+            {
+                _timer = new Timer();
+                _timer.Interval = 5000; // Timer'ın tetiklenme aralığı (milisaniye cinsinden)
+                _timer.Elapsed += Main; // Timer'ın tetiklendiğinde çağrılacak işlevi belirtiyoruz
+                _timer.Start(); // Timer'ı başlatıyoruz
+            }
+
+        }
+
+            [STAThread]
+        private async Task Main(IAccessTokenWriteRepository accessTokenWriteRepository, IEtkinlikWriteRepository etkinlikWriteRepository, IEtkinlikReadRepository etkinlikReadRepository, IAccessTokenReadRepository accessTokenReadRepository)
         {
             Etkinlik Dbe = await etkinlikReadRepository.GetByIdAsync("Id");
             AccessToken Dba = await accessTokenReadRepository.GetByIdAsync(Dbe.ApiId.ToString());

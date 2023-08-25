@@ -53,7 +53,7 @@ namespace Portal.Web.Controllers
         //========================================================================================================================
         //Login Ekranı İşlemleri
 
-
+        
         public IActionResult Index()
         {
             return View();
@@ -249,7 +249,7 @@ namespace Portal.Web.Controllers
 
         //-----------------------------------------------------------------------------------------------------------
         //Admin İşlemleri
-
+        [Authorize(Roles = "2")]
         public async Task<ActionResult> KullaniciSil(string Id)
         {
 
@@ -259,13 +259,13 @@ namespace Portal.Web.Controllers
             return RedirectToAction("AdminKullaniciListesi", "Home");
 
         }
-
+        [Authorize(Roles = "2")]
         public async Task<ActionResult> KullaniciEdit(string Id)
         {
             User Dbu = await _userReadRepository.GetByIdAsync(Id);
             return View(Dbu);
         }
-
+        [Authorize(Roles = "2")]
         [HttpPost]
         public async Task<IActionResult> KullaniciEdit([FromForm] User u)
         {
@@ -277,7 +277,7 @@ namespace Portal.Web.Controllers
             await _userWriteRepository.SaveAsync();
             return RedirectToAction("AdminKullaniciListesi");
         }
-
+        [Authorize(Roles = "2")]
         [HttpPost]
         public IActionResult KullanıcıEkle(UserListPageViewModal u)
         {
@@ -298,13 +298,13 @@ namespace Portal.Web.Controllers
             
             return RedirectToAction("AdminKullaniciListesi");
         }
-
+        [Authorize(Roles = "2")]
         public IActionResult _UserlistAdmin()
         {
             var item = _userReadRepository.Get();
             return PartialView("~/Views/PartialView/_UserlistAdmin.cshtml", item);
         }
-
+        [Authorize(Roles ="2")]
         public IActionResult AdminKullaniciListesi()
         {
             var items = _userReadRepository.Get().ToList();
@@ -326,6 +326,7 @@ namespace Portal.Web.Controllers
 
             return View(denem);
         }
+        [Authorize(Roles = "2")]
         public IActionResult Api()
         {
             var items = _accessTokenReadRepository.Get().ToList();
@@ -346,7 +347,7 @@ namespace Portal.Web.Controllers
 
             return View(api);
         }
-
+        [Authorize(Roles = "2")]
         [HttpPost]
         public IActionResult ApiEkle(ApiPageViewModel a)
         {
@@ -362,7 +363,7 @@ namespace Portal.Web.Controllers
 
         }
 
-
+        [Authorize(Roles = "2")]
         public async Task<ActionResult> ApiSil(string Id)
         {
 
@@ -372,13 +373,14 @@ namespace Portal.Web.Controllers
             return RedirectToAction("Api", "Home");
 
         }
+        [Authorize(Roles = "2")]
         public async Task<ActionResult> ApiGuncelle(string Id)
         {
             AccessToken Dba = await _accessTokenReadRepository.GetByIdAsync(Id);
             return View(Dba);
         }
 
-
+        [Authorize(Roles = "2")]
         [HttpPost]
         public async Task<IActionResult> ApiGuncelle([FromForm] AccessToken a)
         {
