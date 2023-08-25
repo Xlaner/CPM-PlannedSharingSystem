@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Portal.Application.Repositories;
 using Portal.Persistence.Context;
 using Portal.Persistence.Repositories;
-
+using YourNamespace;
 
 namespace ControlPortal.Persistence
 {
@@ -24,7 +24,7 @@ namespace ControlPortal.Persistence
             services.AddScoped<IAccessTokenWriteRepository, AccessTokenWriteRepository>();
             services.AddScoped<IAccessTokenReadRepository, AccessTokenReadRepository>();
 
-            services.AddScoped<TimerManager>();
+            services.AddHostedService<MyBackgroundService>();
 
 
         }

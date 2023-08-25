@@ -32,14 +32,14 @@ namespace Portal.Web.Controllers
        
         readonly private IUserReadRepository _userReadRepository;
         readonly private IUserWriteRepository _userWriteRepository;
-        private readonly TimerManager _timerManager;
+        
 
 
-        public LoginController(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, TimerManager timerManager)
+        public LoginController(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository)
         {
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
-            _timerManager = timerManager;
+          
         }
 
 
