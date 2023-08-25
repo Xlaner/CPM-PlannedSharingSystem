@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Portal.Application.Repositories;
+using Portal.Domain.Entities;
 using System.Text;
 
 
@@ -10,28 +11,22 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
 {
     public class MainProgramImageLinkedin
     {
-        readonly private IAccessTokenReadRepository _accessTokenReadRepository;
-        readonly private IAccessTokenWriteRepository _accessTokenWriteRepository;
-        readonly private IEtkinlikWriteRepository _etkinlikWriteRepository;
-        readonly private IEtkinlikReadRepository _etkinlikReadRepository;
-        public MainProgramImageLinkedin(IAccessTokenWriteRepository accessTokenWriteRepository, IEtkinlikWriteRepository etkinlikWriteRepository, IEtkinlikReadRepository etkinlikReadRepository, IAccessTokenReadRepository accessTokenReadRepository)
-        {
-            _accessTokenWriteRepository = accessTokenWriteRepository;
-            _etkinlikWriteRepository = etkinlikWriteRepository;
-            _etkinlikReadRepository = etkinlikReadRepository;
-            _accessTokenReadRepository = accessTokenReadRepository;
-        }
 
         [STAThread]
-        static async Task Main()
+        static async Task Main(IAccessTokenWriteRepository accessTokenWriteRepository, IEtkinlikWriteRepository etkinlikWriteRepository, IEtkinlikReadRepository etkinlikReadRepository, IAccessTokenReadRepository accessTokenReadRepository)
         {
+            Etkinlik Dbe = await etkinlikReadRepository.GetByIdAsync("Id");
+            AccessToken Dba = await accessTokenReadRepository.GetByIdAsync(Dbe.ApiId.ToString());
+
+            
+            string yol = Path.Combine( "~/Images", Dbe.image);
 
             LinkedinURL URLS = new LinkedinURL
             {
-                accessToken = "", //Your accsess Token
+                accessToken = Dba.Token, //Your accsess Token
 
-                fileUploadPath = @"/ExapmlePath/Photo.png", //path of the photo
-                imageText = "", //Content Text
+                fileUploadPath = yol, //path of the photo
+                imageText = Dbe.description, //Content Text
 
                 contentType = "application/json",
 
