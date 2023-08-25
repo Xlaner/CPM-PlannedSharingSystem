@@ -50,14 +50,8 @@ namespace Portal.Web.Controllers
             _accessTokenWriteRepository = accessTokenWriteRepository;
         }
 
-        //========================================================================================================================
-        //Login Ekranı İşlemleri
 
-        
-        public IActionResult Index()
-        {
-            return View();
-        }
+
 
 
 
