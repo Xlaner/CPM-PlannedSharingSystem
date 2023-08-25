@@ -20,9 +20,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Identity;
+using ControlPortal.Persistence;
 
 namespace Portal.Web.Controllers
 {
+    
     [AllowAnonymous]
 
     public class LoginController : Controller
@@ -30,12 +32,14 @@ namespace Portal.Web.Controllers
        
         readonly private IUserReadRepository _userReadRepository;
         readonly private IUserWriteRepository _userWriteRepository;
+        private readonly TimerManager _timerManager;
 
 
-        public LoginController(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository)
+        public LoginController(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, TimerManager timerManager)
         {
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
+            _timerManager = timerManager;
         }
 
 

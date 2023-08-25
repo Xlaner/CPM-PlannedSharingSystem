@@ -13,7 +13,7 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
     {
 
         [STAThread]
-        private async Task Main(IAccessTokenWriteRepository accessTokenWriteRepository, IEtkinlikWriteRepository etkinlikWriteRepository, IEtkinlikReadRepository etkinlikReadRepository, IAccessTokenReadRepository accessTokenReadRepository)
+        static async Task Main(IAccessTokenWriteRepository accessTokenWriteRepository, IEtkinlikWriteRepository etkinlikWriteRepository, IEtkinlikReadRepository etkinlikReadRepository, IAccessTokenReadRepository accessTokenReadRepository)
         {
             Etkinlik Dbe = await etkinlikReadRepository.GetByIdAsync("Id");
             AccessToken Dba = await accessTokenReadRepository.GetByIdAsync(Dbe.ApiId.ToString());
