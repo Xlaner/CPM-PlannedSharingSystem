@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Portal.Application.Repositories;
 using System.Text;
 
 
@@ -9,18 +10,28 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
 {
     public class MainProgramImageLinkedin
     {
-
+        readonly private IAccessTokenReadRepository _accessTokenReadRepository;
+        readonly private IAccessTokenWriteRepository _accessTokenWriteRepository;
+        readonly private IEtkinlikWriteRepository _etkinlikWriteRepository;
+        readonly private IEtkinlikReadRepository _etkinlikReadRepository;
+        public MainProgramImageLinkedin(IAccessTokenWriteRepository accessTokenWriteRepository, IEtkinlikWriteRepository etkinlikWriteRepository, IEtkinlikReadRepository etkinlikReadRepository, IAccessTokenReadRepository accessTokenReadRepository)
+        {
+            _accessTokenWriteRepository = accessTokenWriteRepository;
+            _etkinlikWriteRepository = etkinlikWriteRepository;
+            _etkinlikReadRepository = etkinlikReadRepository;
+            _accessTokenReadRepository = accessTokenReadRepository;
+        }
 
         [STAThread]
         static async Task Main()
         {
+
             LinkedinURL URLS = new LinkedinURL
             {
-                accessToken = "AccessToken",//Your accsess Token
+                accessToken = "", //Your accsess Token
 
                 fileUploadPath = @"/ExapmlePath/Photo.png", //path of the photo
                 imageText = "", //Content Text
-
 
                 contentType = "application/json",
 
