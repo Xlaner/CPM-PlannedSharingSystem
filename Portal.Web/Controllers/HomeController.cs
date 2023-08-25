@@ -278,16 +278,24 @@ namespace Portal.Web.Controllers
             return RedirectToAction("AdminKullaniciListesi");
         }
 
+        [HttpPost]
         public IActionResult KullanıcıEkle(UserListPageViewModal u)
         {
-            User Dbu = new User { };
-            Dbu.UserName = u.SingleUser.UserName;
-            Dbu.Password = u.SingleUser.Password;
-            Dbu.Role = u.SingleUser.Role;
+            if(u.SingleUser.UserName != null )
+            {
+                if(u.SingleUser.Password != null)
+                {
+                    User Dbu = new User { };
+                    Dbu.UserName = u.SingleUser.UserName;
+                    Dbu.Password = u.SingleUser.Password;
+                    Dbu.Role = u.SingleUser.Role;
 
-            _userWriteRepository.AddAsync(Dbu).Wait();
-            _userWriteRepository.SaveAsync().Wait();
-
+                    _userWriteRepository.AddAsync(Dbu).Wait();
+                    _userWriteRepository.SaveAsync().Wait();
+                }
+                
+            }
+            
             return RedirectToAction("AdminKullaniciListesi");
         }
 

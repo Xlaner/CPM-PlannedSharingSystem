@@ -26,7 +26,7 @@
 
     <table class="table table-bordered">
         <tr>
-            <td>Sosyal Medya Türü</td>
+            <td>&nbsp;&nbsp; Sosyal Medya Türü</td>
             <td>Açıklama</td>
             <td>Token</td>
             <td>Son Değişiklik</td>
@@ -43,6 +43,7 @@
                     case "Linkedin":
 
                         <td>
+                            &nbsp;&nbsp;
                             @api.ApiTuru
                             <span class="bi bi-linkedin"></span>
                         </td>
@@ -108,6 +109,7 @@
 
 
 @section Scripts{
+
         <script>
             function validateForm() {
                 var description = document.getElementById("baslik").getElementsByTagName("input")[0].value;
@@ -126,14 +128,15 @@
                 return true;
             }
 
-        </script>
+        </script> @* Bilgiler boş girilemez scripti*@
+       
         <script>
             $(document).ready(function () {
                 $('#KaydetButton').on('click', function (e) {
                     e.preventDefault();
 
                     Swal.fire({
-                        title: 'Değişiklikler kaydedilsin mi?',
+                        title: 'Yeni hesap bilgileri kaydedilsin mi?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -161,21 +164,20 @@
                 });
 
                 // Oluşturduğumuz tıklama olayını butona gönderiyoruz
-                button.dispatchEvent(event);
-                validateForm();
+                if (validateForm()) {
+                    button.dispatchEvent(event);
+                }
 
             }
 
-        </script>
+        </script> @* Kaydet onay sweatalert*@
 
         <script>
 
                 document.getElementById("baslik").querySelector("input").value = "";
                 document.getElementById("token").querySelector("input").value = "";
-        </script>
+        </script> @* İnputların boş gelmesini sağlayan script*@
     
-       
-   
         <script>
             // Tüm "silButton" sınıfına sahip öğeleri seç
             var deleteButtons = document.querySelectorAll(".silButton");
@@ -233,13 +235,13 @@
                     }
                 });
             }
-        </script>
+        </script> @* silme onayı sweatalert*@
 
         <script>
             $('body').on('click', '#apieklebuton', function () {
                 $(".modal").modal('show');
             })
-        </script>
+        </script> @* Api ekleme modal script*@
     }
 
 </body>
