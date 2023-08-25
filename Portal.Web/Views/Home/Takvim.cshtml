@@ -296,17 +296,83 @@
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
                         confirmButtonText: 'Evet, sil!',
-                        cancelButtonText: 'İptal'
+                        cancelButtonText: 'İptal',
+ 
                     }).then((result) => {
                         if (result.isConfirmed) {
-                          
-                            performDelete(); // Onay verildiğinde silme işlemini başlat
+                            var denem = $("#partialItemGroupId").val();
+                            if (denem != "") {
+
+                                Swal.fire({
+                                    title: 'Bu etkinlik tekrarlı hepsini silmek istediğinizden emin misiniz?',
+                                    text: "Bu işlem geri alınamaz!",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Evet, sil!',
+                                    cancelButtonText: 'İptal',
+                                    showDenyButton: true, // Ekstra buton
+                                    denyButtonText: 'Hayır, Sadece Bunu Sil',
+                                    denyButtonColor: '#3085d6',
+
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        var Id = $("#partialItemId").val();
+
+                                        performDeleteAll(Id);
+                                    }
+                                    else if (result.isDenied) {
+                                        performDeleteAsSingle();
+                                    }
+
+                                });
+                       
+                            }
+                            else{
+                                performDeleteAsSingle();
+                            }
+                            // Onay verildiğinde silme işlemini başlat
                         }
+
+
                     });
                 });
             });
+            function performDeleteAll(Id) {
+                $.ajax({
+                    url: '/Home/EtkinlikSilAll', // Controller adı ve action adı
+                    method: 'POST',
+                    data: { id: Id }, // Id değerini iletmek
+                    error: function (data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Tüm Tekrarlar Silindi!',
+                            text: data.message, // İşlem sonucu mesajı
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
 
-            function performDelete() {
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    },
+                    success: function (data) {
+                        Swal.fire(
+                            'success',
+                            'Tüm Tekrarlar Silindi!',
+                            //showConfirmButton: false,
+                            data.message,
+
+
+                        );
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+                }
+            function performDeleteAsSingle() {
                 // İşlemi başlatan fonksiyon
                 $.ajax({
                     url: $('#deleteButton').attr('href'),
@@ -385,13 +451,7 @@
                                 $("#editEventModal").modal('show');
                                 $("#deleteButton").attr("href", "/Home/EtkinlikSil?Id=" + $("#partialItemId").val());
                                 $("#deleteButtonAll").attr("href", "/Home/EtkinlikSil?Id=" + $("#partialItemId").val());
-                                var denem = $("#partialItemGroupId").val();
-                                if (denem != "") {
-                                    $("#deleteButtonAll").show();
-                                }
-                                else{
-                                    $("#deleteButtonAll").hide();
-                                }
+                                
                                
                                
 
