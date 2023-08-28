@@ -7,13 +7,13 @@ namespace Portal.Web.Apis.LinkedinApi.OnlyText
 {
     public class MainProgramOnlyTextLinkedin
     {
-        static void Main()
+        public static async Task RunLinkedInOnlyTextShareAsync(string Token,string Text)
         {
             LinkedinURLText URLS = new LinkedinURLText
             {
-                accessToken = "AccessToken",//Your accsess Token
+                accessToken = Token,//Your accsess Token
 
-                Text = "ExampleText", //Content Text
+                Text = Text, //Content Text
                 contentType = "application/json",
 
             };

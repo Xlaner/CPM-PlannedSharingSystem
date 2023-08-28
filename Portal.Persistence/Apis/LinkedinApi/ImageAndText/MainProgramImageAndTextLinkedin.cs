@@ -15,7 +15,7 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
     public class MainProgramImageLinkedin
     {
         
-        public static async Task RunLinkedInImageShareAsync(string ApiToken,string Text , string İmage)
+        public static async Task RunLinkedInImageShareAsync(string ApiToken,string Text , string yol)
         {
 
             try
@@ -25,7 +25,7 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
                 LinkedinURL URLS = new LinkedinURL
                 {
                     accessToken = ApiToken,
-                    fileUploadPath = İmage,
+                    fileUploadPath = yol,
                     imageText = Text,
                     contentType = "application/json",
                     imageText2 = "ExampleText",
