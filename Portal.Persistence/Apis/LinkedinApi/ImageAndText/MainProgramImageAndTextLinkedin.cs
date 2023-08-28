@@ -13,21 +13,19 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
 {
     public class MainProgramImageLinkedin
     {
-        public async Task RunLinkedInImageShareAsync(Etkinlik e)
-        {
-            
 
-            Console.WriteLine(e);
+        public static async Task RunLinkedInImageShareAsync(string ApiToken,string Text , string İmage)
+        {
 
             try
             {
-                //string yol = Path.Combine("~/Images", Dbe.image);
+
 
                 LinkedinURL URLS = new LinkedinURL
                 {
-                    accessToken = "Dba.Token",
-                    fileUploadPath = "",
-                    imageText = "",
+                    accessToken = ApiToken,
+                    fileUploadPath = @"~/Images/"+İmage,
+                    imageText = Text,
                     contentType = "application/json",
                     imageText2 = "ExampleText",
                     imageTitle = "Title",

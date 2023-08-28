@@ -21,6 +21,7 @@ using Newtonsoft.Json.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Identity;
 using ControlPortal.Persistence;
+using BackGroundService;
 
 namespace Portal.Web.Controllers
 {
@@ -32,19 +33,19 @@ namespace Portal.Web.Controllers
        
         readonly private IUserReadRepository _userReadRepository;
         readonly private IUserWriteRepository _userWriteRepository;
-        
-
+       
 
         public LoginController(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository)
         {
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
-          
+           
         }
 
 
         public IActionResult Index()
         {
+            
             return View();
         }
         [HttpPost]

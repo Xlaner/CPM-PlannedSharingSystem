@@ -20,8 +20,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Identity;
-
-
+using BackGroundService;
 
 namespace Portal.Web.Controllers
 {
@@ -36,11 +35,11 @@ namespace Portal.Web.Controllers
         readonly private IEtkinlikReadRepository _etkinlikReadRepository;
         readonly private IUserReadRepository _userReadRepository;
         readonly private IUserWriteRepository _userWriteRepository;
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, IUserWriteRepository userWriteRepository, IUserReadRepository userReadRepository, IEtkinlikWriteRepository etkinlikWriteRepository, IEtkinlikReadRepository etkinlikReadRepository, IWebHostEnvironment hostingEnvironment, IAccessTokenReadRepository accessTokenReadRepository, IAccessTokenWriteRepository accessTokenWriteRepository)
+
+        public HomeController(IUserWriteRepository userWriteRepository, IUserReadRepository userReadRepository, IEtkinlikWriteRepository etkinlikWriteRepository, IEtkinlikReadRepository etkinlikReadRepository, IWebHostEnvironment hostingEnvironment, IAccessTokenReadRepository accessTokenReadRepository, IAccessTokenWriteRepository accessTokenWriteRepository)
         {
-            _logger = logger;
+
             _userWriteRepository = userWriteRepository;
             _userReadRepository = userReadRepository;
             _etkinlikWriteRepository = etkinlikWriteRepository;
@@ -48,6 +47,7 @@ namespace Portal.Web.Controllers
             _hostingEnvironment = hostingEnvironment;
             _accessTokenReadRepository = accessTokenReadRepository;
             _accessTokenWriteRepository = accessTokenWriteRepository;
+
         }
 
 

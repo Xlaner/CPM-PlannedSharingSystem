@@ -127,6 +127,8 @@
 
                         <h5>Etkinlik Adı</h5>
                         <div class="form-group" id="etkinlikadi"> @Html.TextBoxFor(elm=>elm.EtkinlikEkle.title, new {@class = "form-control", @type="text", @placeholder="Etkinlik adını giriniz...", @value = Model?.EtkinlikEkle.title}) </div>
+                        <h5>Etkinlik İçerik Metni</h5>
+                        <div class="form-group" id="etkinlikadi"> @Html.TextAreaFor(elm=>elm.EtkinlikEkle.description, new {@class = "form-control", @type="text", @placeholder="Sosyal medyada paylaşılacak metni...", @value = Model?.EtkinlikEkle.description}) </div>
 
                         <h5>Fotoğraf Yükle</h5>
                         <input class="form-control" asp-for="EtkinlikEkle.image" type="file" id="fileName" accept=".jpeg, .jpg, .png" onchange="validateFileType()">

@@ -1,34 +1,80 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Portal.Application.Repositories;
+using Portal.Persistence.Context;
+using Portal.Web.Apis.LinkedinApi.ImageAndText;
+using System.Data.Entity.Core.Common.CommandTrees;
 
-namespace YourNamespace
+namespace BackGroundService
+
 {
     public class MyBackgroundService : BackgroundService
     {
         private readonly ILogger<MyBackgroundService> _logger;
-        private readonly IEtkinlikReadRepository etkinlikReadRepository;
-        public MyBackgroundService(ILogger<MyBackgroundService> logger, IEtkinlikReadRepository etkinlikReadRepository)
+        private readonly IServiceProvider _serviceProvider;
+        private IAccessTokenReadRepository _accessTokenReadRepository;
+
+        public MyBackgroundService(
+            ILogger<MyBackgroundService> logger,
+            IServiceProvider serviceProvider)
         {
             _logger = logger;
-            this.etkinlikReadRepository = etkinlikReadRepository;
+            _serviceProvider = serviceProvider;
         }
+
+        public void Initialize()
+        {
+            // Scoped servisleri burada Initialize edin
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                _accessTokenReadRepository = scope.ServiceProvider.GetRequiredService<IAccessTokenReadRepository>();
+            }
+        }
+
+        // Diğer kodlar...
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            Initialize(); // Initialize metodu ile servisleri alın
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Arka planda çalışan servis çalışıyor.");
-                var datas = etkinlikReadRepository.Get();
-                // Burada arka planda yapılacak işlemleri gerçekleştirin.
-                foreach (var data in datas)
+                var optionsBuilder = new DbContextOptionsBuilder<PortalDbContext>();
+                optionsBuilder.UseSqlServer("Server=10.10.10.60;Database=PortalDb;User Id=sa;Password=123456;TrustServerCertificate=True;");
+
+                using (var dbContext = new PortalDbContext(optionsBuilder.Options))
                 {
-                    Console.WriteLine(data.Id);
+                    var DbEtkinlikler = dbContext.etkinliks.ToList();
+                    foreach(var Dbe in DbEtkinlikler)
+                    {
+                        
+                        if(Dbe.start.Date == DateTime.Now.Date)
+                        {
+                            var DbApiler = dbContext.AccessTokens.ToList();
+                            foreach(var Dba in DbApiler)
+                            {
+                                if(Dbe.image!= null && Dbe.ApiId == Dba.Id.ToString())
+                                {
+                                   
+                                    await MainProgramImageLinkedin.RunLinkedInImageShareAsync(Dba.Token.ToString(),Dbe.description,Dbe.image);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("eşleşme yok");
+                                }
+
+                            }
+                        }
+                    }
+                    
                 }
-                await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken); // Örnek olarak 1 dakika bekleyin.
+                // _accessTokenReadRepository'i kullanarak işlemleri gerçekleştirin
+                
+                
+                // Burada arka planda yapılacak işlemleri gerçekleştirin.
+
+                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken); // Örnek olarak 1 dakika bekleyin.
             }
         }
     }
