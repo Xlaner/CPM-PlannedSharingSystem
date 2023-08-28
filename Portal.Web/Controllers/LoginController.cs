@@ -91,10 +91,13 @@ namespace Portal.Web.Controllers
             Response.Headers["Pragma"] = "no-cache";
             Response.Headers["Expires"] = "0";
 
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("loginout", "Login");
         }
 
-
+        public IActionResult loginout()
+        {
+            return View();
+        }
 
     }
 }

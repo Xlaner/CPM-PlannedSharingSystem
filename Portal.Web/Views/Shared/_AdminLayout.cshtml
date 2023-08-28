@@ -13,6 +13,22 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/sidebar-07/css/style.css"> <!-- Doğru CSS dosyası yolu burada olmalı -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <script type="text/javascript">
+            function preventBack() { window.history.forward(); }
+
+            setTimeout(preventBack, 0);
+
+            window.onunload = function () { null };
+
+            var refererUrl = document.referrer;
+
+            setTimeout(function () {
+                window.location = refererUrl;
+            }, 300); // 300 milisaniye gecikme süresi
+        </script>
+    }
 
 </head>
   <body>
