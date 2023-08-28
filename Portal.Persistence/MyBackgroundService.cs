@@ -54,10 +54,12 @@ namespace BackGroundService
                             var DbApiler = dbContext.AccessTokens.ToList();
                             foreach(var Dba in DbApiler)
                             {
-                                if(Dbe.image!= null && Dbe.ApiId == Dba.Id.ToString())
+                                Console.WriteLine(Dba.Id);
+                                Console.WriteLine(Dbe.ApiId);
+                                if(Dbe.ApiId == Dba.Id.ToString())
                                 {
-                                   
-                                    await MainProgramImageLinkedin.RunLinkedInImageShareAsync(Dba.Token.ToString(),Dbe.description,Dbe.image);
+                                     
+                                    await MainProgramImageLinkedin.RunLinkedInImageShareAsync(Dba.Token.ToString(), Dbe.description, Dbe.imagePath);
                                 }
                                 else
                                 {

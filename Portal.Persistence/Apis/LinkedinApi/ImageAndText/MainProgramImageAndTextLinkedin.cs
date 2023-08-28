@@ -8,12 +8,13 @@ using Newtonsoft.Json.Linq;
 using Portal.Application.Repositories;
 using Portal.Domain.Entities;
 using Portal.Persistence.Context;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Portal.Web.Apis.LinkedinApi.ImageAndText
 {
     public class MainProgramImageLinkedin
     {
-
+        
         public static async Task RunLinkedInImageShareAsync(string ApiToken,string Text , string İmage)
         {
 
@@ -24,7 +25,7 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
                 LinkedinURL URLS = new LinkedinURL
                 {
                     accessToken = ApiToken,
-                    fileUploadPath = @"~/Images/"+İmage,
+                    fileUploadPath = İmage,
                     imageText = Text,
                     contentType = "application/json",
                     imageText2 = "ExampleText",

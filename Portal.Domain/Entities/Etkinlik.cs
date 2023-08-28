@@ -8,6 +8,7 @@ namespace Portal.Domain.Entities
         public string? description { get; set; }
         public DateTime start { get; set; }
         public string? image { get; set; }
+        public string imagePath { get; set; }
         public string? Tekrar { get; set; }
         public int? TekrarNum { get; set; } 
         public Guid? TekrarEtkinlikGrupId { get; set; }

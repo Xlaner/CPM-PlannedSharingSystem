@@ -102,7 +102,7 @@ namespace Portal.Web.Controllers
                     }
 
                     Dbe.image = dosyaadi + uzanti;
-
+                    Dbe.imagePath = yol;
                 }
                 if (e.EtkinlikEkle.Tekrar == "Aylık")
                 {
