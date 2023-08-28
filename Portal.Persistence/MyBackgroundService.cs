@@ -105,7 +105,7 @@ namespace BackGroundService
                 
                 // Burada arka planda yapılacak işlemleri gerçekleştirin.
 
-                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken); // Örnek olarak 1 dakika bekleyin.
+                await Task.Delay(TimeSpan.FromDays(1), stoppingToken); // Örnek olarak 1 dakika bekleyin.
             }
         }
     }
