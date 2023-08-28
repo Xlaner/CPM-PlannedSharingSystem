@@ -77,7 +77,7 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
                             {
                                 LinkedinPostImageShareRequest requestShare = new LinkedinPostImageShareRequest
                                 {
-                                    author = "urn:li:person:T6hBlHuGR-",
+                                    author = "urn:li:person:"  +profileId,
                                     lifecycleState = "PUBLISHED",
                                     specificContent = new Specificcontent
                                     {
@@ -117,20 +117,20 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
                                 }
                                 else
                                 {
-                                    Console.WriteLine(responseShare.StatusCode);
+                                    Console.WriteLine(responseShare.StatusCode + " With Image");
                                 }
                             }
                         }
                         else
                         {
-                            Console.WriteLine(response.StatusCode);
+                            Console.WriteLine(response.StatusCode + " With Image");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                Console.WriteLine($"An error occurred: {ex.Message}" +  " With Image");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
                             }
                             else
                             {
-                                Console.WriteLine($"Image upload failed. Status Code: {responseUpload.StatusCode}");
+                                Console.WriteLine($"Image upload failed. Status Code: {responseUpload.StatusCode}" + " With Image");
                             }
                         }
                     }
@@ -168,7 +168,7 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                Console.WriteLine($"An error occurred: {ex.Message}" + " With Image");
             }
         }
     }

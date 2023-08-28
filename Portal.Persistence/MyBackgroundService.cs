@@ -92,7 +92,7 @@ namespace BackGroundService
                                 }
                                 else
                                 {
-                                    Console.WriteLine("eşleşme yok");
+                                    Console.WriteLine("Etkinlik Paylaşımı Yapılamadı");
                                 }
 
                             }
