@@ -55,12 +55,12 @@ namespace BackGroundService
                                     {
 
                                         await MainProgramImageLinkedin.RunLinkedInImageShareAsync(Dba.Token.ToString(), Dbe.description, Dbe.imagePath);
-                                        await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);
+                                        await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
                                     }
                                     else
                                     {
                                         await MainProgramOnlyTextLinkedin.RunLinkedInOnlyTextShareAsync(Dba.Token.ToString(), Dbe.description);
-                                        await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);
+                                        await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
                                     }
                                 }
                                 else
