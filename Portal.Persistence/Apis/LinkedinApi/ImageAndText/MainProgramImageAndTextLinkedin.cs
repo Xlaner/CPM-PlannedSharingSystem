@@ -35,10 +35,10 @@ namespace Portal.Web.Apis.LinkedinApi.ImageAndText
                 using (var profile = new HttpClient())
                 {
                     profile.DefaultRequestHeaders.Add("Authorization", "Bearer " + URLS.accessToken);
-                    var responseProfile = await profile.GetAsync("https://api.linkedin.com/v2/me");
+                    var responseProfile = await profile.GetAsync("https://api.linkedin.com/v2/userinfo");
                     var respContentProfile = await responseProfile.Content.ReadAsStringAsync();
                     JToken tokenProfile = JObject.Parse(respContentProfile);
-                    string profileId = (string)tokenProfile["id"];
+                    string profileId = (string)tokenProfile["sub"];
 
                     using (var client = new HttpClient())
                     {

@@ -21,12 +21,12 @@ namespace Portal.Web.Apis.LinkedinApi.OnlyText
             using (var profile = new HttpClient())
             {
                 profile.DefaultRequestHeaders.Add("Authorization", "Bearer " + URLS.accessToken);
-                var response = profile.GetAsync("https://api.linkedin.com/v2/me").Result;
+                var response = profile.GetAsync("https://api.linkedin.com/v2/userinfo").Result;
 
                 var respContent = response.Content.ReadAsStringAsync().Result;
 
                 JToken token = JObject.Parse(respContent);
-                string profileId = (string)token["id"];
+                string profileId = (string)token["sub"];
                 if (!string.IsNullOrEmpty(profileId))
                 {
                     using (var client = new HttpClient())

@@ -5,28 +5,7 @@ using Microsoft.Extensions.Logging;
 using Portal.Application.Repositories;
 using Portal.Persistence.Context;
 using Portal.Web.Apis.LinkedinApi.ImageAndText;
-using System.Data.Entity.Core.Common.CommandTrees;
 
-
-
-using Microsoft.Identity.Client;
-using Portal.Application.Repositories;
-using Portal.Domain.Entities;
-using Microsoft.AspNetCore.Hosting;
-using ServiceStack;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Http.Features;
-using System.Reflection;
-using static System.Net.WebRequestMethods;
-using System.IO;
-using System.Security.Claims;
-
-using Newtonsoft.Json.Linq;
-using static System.Net.Mime.MediaTypeNames;
-
-using BackGroundService;
 using Portal.Web.Apis.LinkedinApi.OnlyText;
 
 namespace BackGroundService
@@ -35,8 +14,8 @@ namespace BackGroundService
     public class MyBackgroundService : BackgroundService
     {
         private readonly ILogger<MyBackgroundService> _logger;
-        private readonly IServiceProvider _serviceProvider;
-        private IAccessTokenReadRepository _accessTokenReadRepository;
+
+
 
 
         public MyBackgroundService(
@@ -44,23 +23,15 @@ namespace BackGroundService
             IServiceProvider serviceProvider)
         {
             _logger = logger;
-            _serviceProvider = serviceProvider;
+
         }
 
-        public void Initialize()
-        {
-            // Scoped servisleri burada Initialize edin
-            using (var scope = _serviceProvider.CreateScope())
-            {
-                _accessTokenReadRepository = scope.ServiceProvider.GetRequiredService<IAccessTokenReadRepository>();
-            }
-        }
 
         // Diğer kodlar...
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Initialize(); // Initialize metodu ile servisleri alın
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<PortalDbContext>();
@@ -82,12 +53,14 @@ namespace BackGroundService
                                 {       
                                     if(Dbe.image != null)
                                     {
-                                        await MainProgramImageLinkedin.RunLinkedInImageShareAsync(Dba.Token.ToString(), Dbe.description, Dbe.imagePath);
 
+                                        await MainProgramImageLinkedin.RunLinkedInImageShareAsync(Dba.Token.ToString(), Dbe.description, Dbe.imagePath);
+                                        await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);
                                     }
                                     else
                                     {
-                                        await MainProgramOnlyTextLinkedin.RunLinkedInOnlyTextShareAsync(Dba.Token, Dbe.description);
+                                        await MainProgramOnlyTextLinkedin.RunLinkedInOnlyTextShareAsync(Dba.Token.ToString(), Dbe.description);
+                                        await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);
                                     }
                                 }
                                 else
